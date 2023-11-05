@@ -1,10 +1,22 @@
 // const fs = require('fs')
+import express from 'express'
 import AppointmentService from './service/service.js'
+import bodyParser from 'body-parser'
+import AppointmentController from './controller/controller.js'
+import routes from './routes/routes.js'
 
-// addAppointment("Ini Tanggal 4 Nov Hari Sabtu Mau booking Dong", "5 November")
-// deleteAppointmentsByID("3a08a13f-2ce0-4d76-b746-c24abb755653")
-// getAppointments()
+const app = express()
+// const router = express.Router()
 
-const appointment = new AppointmentService()
-appointment.updateAppointmentsByID("6342ff28-5301-4640-9fd5-587ca8a6f0a2", "Input Name Updated Class", "Input Date Updated Class")
-appointment.getAppointments()
+// Middleware -> will explain di next session
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded())
+
+const svc = new AppointmentService()
+const controller = new AppointmentController(svc)
+
+routes(app, controller)
+
+app.listen(3000, function () {
+    console.log("Server start on Port 3000");
+})
