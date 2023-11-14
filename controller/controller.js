@@ -4,10 +4,10 @@ class AppointmentController {
     constructor(appointmentService) {
         this.svc = appointmentService
     }
-
-    addAppointment = (req, res, next) => {
+    // this.svc.addAppointment.then(() => {]}).catch()
+    addAppointment = async (req, res, next) => {
         try {
-            this.svc.addAppointment(req.body)
+            await this.svc.addAppointment(req.body)
             res.send({
                 status: "success"
             })
@@ -19,39 +19,49 @@ class AppointmentController {
         }
     }
 
-    getAppointment = (req, res, next) => {
-        const data = this.svc.getAppointments()
-        res.send({
-            data: data
-        })
+    getAppointment = async (req, res, next) => {
+        try {
+            const { page, pageSize } = req.query
+            const data = await this.svc.getAppointments(page, pageSize)
+            res.send({
+                data: data
+            })
+        } catch(err) {
+            console.error(`[AppointmentController] [getAppointment] err=${err}`)
+            res.send({
+                error: err.toString()
+            }) 
+        }
     }
 
-    updateAppointment = (req, res, next) => {
+    updateAppointment = async (req, res, next) => {
         try {
             const id = req.params.id
 
-            this.svc.updateAppointmentsByID(id, req.body)
+            await this.svc.updateAppointmentsByID(id, req.body)
             res.send({
                 status: "success"
             })
         } catch (error) {
+            console.error(`[AppointmentController] [updateAppointment] err=${error}`)
             res.send({
-                error: error
+                error: error.toString()
             })
         }
     }
 
-    deleteAppointment = (req, res, next) => {
+    deleteAppointment = async (req, res, next) => {
         try {
             const id = req.params.id
 
-            this.svc.deleteAppointmentsByID(id)
+            await this.svc.deleteAppointmentsByID(id)
             res.send({
                 status: "success"
             })
         } catch (error) {
+            console.error(`[AppointmentController] [deleteAppointment] err=${error}`)
             res.send({
-                error: error
+                error: error.toString()
             })
         }
     }
