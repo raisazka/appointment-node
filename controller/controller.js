@@ -7,14 +7,14 @@ class AppointmentController {
     // this.svc.addAppointment.then(() => {]}).catch()
     addAppointment = async (req, res, next) => {
         try {
-            await this.svc.addAppointment(req.body)
+            await this.svc.addAppointment(req.body, req.user)
             res.send({
                 status: "success"
             })
         } catch (err) {
             console.error(`[AppointmentController] [addAppointment] err=${err}`)
             res.send({
-                error: err
+                error: err.toString()
             })
         }
     }

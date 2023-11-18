@@ -4,7 +4,7 @@ const Appointment = new mongoose.Schema({
     doctorID: {
         type: mongoose.Types.ObjectId
     },
-    customerID: {
+    userID: {
         type: mongoose.Types.ObjectId
     },
     appointmentTime: {

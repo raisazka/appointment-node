@@ -6,8 +6,11 @@ import AppointmentController from './controller/controller.js'
 import routes from './routes/routes.js'
 import connection from './utils/mongoose/connection.js'
 import AppointmentRepository from './repository/impl/repository.js'
-import CustomerRepository from './repository/impl/customer-repo.js'
+import UserRepository from './repository/impl/user.js'
 import DoctorRepository from './repository/impl/doctor-repo.js'
+import AuthService from './service/auth.js'
+import AuthController from './controller/auth.js'
+import authRoutes from './routes/authRoutes.js'
 
 const app = express()
 // const router = express.Router()
@@ -20,13 +23,17 @@ app.use(bodyParser.urlencoded({ extended: true }))
 connection()
 
 const appointmentRepo = new AppointmentRepository()
-const customerRepo = new CustomerRepository()
+const userRepo = new UserRepository()
 const doctorRepo = new DoctorRepository()
 
-const svc = new AppointmentService(appointmentRepo, customerRepo, doctorRepo)
+const svc = new AppointmentService(appointmentRepo, userRepo, doctorRepo)
+const authSvc = new AuthService(userRepo)
+
 const controller = new AppointmentController(svc)
+const authController = new AuthController(authSvc)
 
 routes(app, controller)
+authRoutes(app, authController)
 
 app.listen(3000, function () {
     console.log("Server start on Port 3000");

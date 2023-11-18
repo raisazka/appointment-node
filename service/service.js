@@ -1,7 +1,5 @@
-import * as fs from 'fs'
 import appointmentSchema from '../utils/validator/appointment-validator.js'
 
-const fileName = "appointment.json"
 // Separation of Concern
 
 class AppointmentService {
@@ -12,14 +10,15 @@ class AppointmentService {
     }
 
     // AddAppointment will store new appointment in appointment.js
-    addAppointment = (addAppointmentRequest) => {
+    addAppointment = async (addAppointmentRequest, user) => {
         const { error } = appointmentSchema.validate(addAppointmentRequest, {
             abortEarly: true
         })
         if (error) {
             throw error
         }
-        
+        // gaenaknya, kita perlu ambil id dulu by email
+        addAppointmentRequest.userID = user.userID
         return this.repo.add(addAppointmentRequest)
     }
 
@@ -35,15 +34,13 @@ class AppointmentService {
 
         let response = []
         for(let i = 0; i < data.length; i++) {
-            const customer = await this.custRepo.getByID(data[i].customerID)
+            const user = await this.custRepo.getByID(data[i].userID)
             const doctor = await this.doctRepo.getByID(data[i].doctorID)
-
             response.push({
                 id: data[i]._id,
                 customer: {
-                    name: customer.name,
-                    email: customer.email,
-                    phone: customer.phone
+                    name: user.name,
+                    email: user.email,
                 },
                 doctor: doctor.name,
                 appointmentTime: data[i].appointmentTime,

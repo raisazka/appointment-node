@@ -9,12 +9,18 @@ const Address = new mongoose.Schema({
     }
 })
 
-const Customer = new mongoose.Schema({
+const User = new mongoose.Schema({
     name: {
-        type: String
+        type: String,
+        required: true
     },
     email: {
-        type: String
+        type: String,
+        required: true
+    },
+    password: {
+        type: String,
+        required: true
     },
     phone: {
         type: String
@@ -33,6 +39,6 @@ const Customer = new mongoose.Schema({
     }
 })
 
-const CustomerModel = mongoose.model("customer", Customer)
+const UserModel = mongoose.model("user", User)
 
-export default CustomerModel
+export default UserModel

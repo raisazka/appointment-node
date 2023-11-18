@@ -5,7 +5,7 @@ class AppointmentRepository {
 
     add = (req) => {
         return AppointmentModel.create({
-            customerID: new mongoose.Types.ObjectId(req.customerID),
+            userID: new mongoose.Types.ObjectId(req.userID),
             doctorID: new mongoose.Types.ObjectId(req.doctorID),
             appointmentTime: new Date(req.appointmentTime),
             service: req.service,
