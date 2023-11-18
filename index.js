@@ -7,10 +7,11 @@ import routes from './routes/routes.js'
 import connection from './utils/mongoose/connection.js'
 import AppointmentRepository from './repository/impl/repository.js'
 import UserRepository from './repository/impl/user.js'
-import DoctorRepository from './repository/impl/doctor-repo.js'
+import DoctorRepository from './repository/impl/doctor.js'
 import AuthService from './service/auth.js'
 import AuthController from './controller/auth.js'
 import authRoutes from './routes/authRoutes.js'
+import errorHandlerMiddleware from './middleware/errorHandlerMiddleware.js'
 
 const app = express()
 // const router = express.Router()
@@ -18,6 +19,7 @@ const app = express()
 // Middleware -> will explain di next session
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(errorHandlerMiddleware)
 
 // Init to MongoDB
 connection()

@@ -6,13 +6,13 @@ class AuthController {
     login = async (req, res, next) => {
         try {
             const token = await this.svc.login(req.body)
-            res.send({
+            res.status(200).json({
                 access_token: token
             })
         } catch(err) {
             console.error(`[AuthController][login] error:${err}`)
-            res.send({
-                error: err.toString()
+            res.status(err.statusCode).json({
+                error: err.message,
             })
         }
     }
@@ -25,8 +25,8 @@ class AuthController {
             })
         } catch(err) {
             console.error(`[AuthController][register] error:${err}`)
-            res.send({
-                error: err.toString()
+            res.status(err.statusCode).json({
+                error: err.message,
             })
         } 
     }

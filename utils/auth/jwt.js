@@ -17,8 +17,8 @@ const verify = (token) => {
     return jwt.verify(token, JWT_SECRET)
 }
 
-const generateToken = (userID, email) => {
-    return jwt.sign({ userID, email }, JWT_SECRET, {
+const generateToken = (userID, email, role) => {
+    return jwt.sign({ userID, email, role }, JWT_SECRET, {
         expiresIn: 3600000,
     })
 }

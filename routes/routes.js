@@ -1,8 +1,8 @@
-import authMiddleware from "../middleware/authMiddleware.js"
+import { adminAuthMiddleware, authMiddleware } from "../middleware/authMiddleware.js"
 
 export default (app, controller) => {
-    app.get("/appointment", authMiddleware, controller.getAppointment)
+    app.get("/appointment", adminAuthMiddleware, controller.getAppointment)
     app.post("/appointment/create", authMiddleware, controller.addAppointment)
     app.patch("/appointment/update/:id", authMiddleware, controller.updateAppointment)
-    app.delete("/appointment/delete/:id", authMiddleware, controller.deleteAppointment)
+    app.delete("/appointment/delete/:id", adminAuthMiddleware, controller.deleteAppointment)
 }

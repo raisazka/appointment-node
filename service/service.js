@@ -1,5 +1,5 @@
 import appointmentSchema from '../utils/validator/appointment-validator.js'
-
+import BaseError from '../utils/error/error.js'
 // Separation of Concern
 
 class AppointmentService {
@@ -15,7 +15,7 @@ class AppointmentService {
             abortEarly: true
         })
         if (error) {
-            throw error
+            throw new BaseError(400, error)
         }
         // gaenaknya, kita perlu ambil id dulu by email
         addAppointmentRequest.userID = user.userID
@@ -55,11 +55,11 @@ class AppointmentService {
         try {
             const data = await this.repo.getByID(deletedID)
 
-            if (!data) throw new Error("No Data Found")
+            if (!data) throw new Error(500, "No Data Found")
 
             return this.repo.delete(deletedID)
         } catch(err) {
-            throw new Error(err)
+            throw new BaseError(500, err)
         }
     }
 
@@ -72,19 +72,19 @@ class AppointmentService {
         try {
             // Check data by id, if it's exists or not
             const data = await this.repo.getByID(updatedID)
-            if (!data) throw new Error("No Data Found") 
+            if (!data) throw new BaseError(500, "No Data Found") 
 
             // Check customer data & doctor data if it's exists or not
             const customer = await this.custRepo.getByID(updateAppointmentRequest.customerID)
             const doctor = await this.doctRepo.getByID(updateAppointmentRequest.doctorID)
         
             if (!customer || !doctor) {
-                throw new Error("Customer or Doctor data not found")
+                throw new BaseError(500, "Customer or Doctor data not found")
             }
 
             return this.repo.update(updatedID, updateAppointmentRequest)
         } catch (error) {
-           throw error 
+           throw new BaseError(500, error) 
         }
     }
 } 

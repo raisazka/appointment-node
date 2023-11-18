@@ -8,13 +8,13 @@ class AppointmentController {
     addAppointment = async (req, res, next) => {
         try {
             await this.svc.addAppointment(req.body, req.user)
-            res.send({
+            res.status(201).json({
                 status: "success"
             })
         } catch (err) {
             console.error(`[AppointmentController] [addAppointment] err=${err}`)
-            res.send({
-                error: err.toString()
+            res.status(err.statusCode).json({
+                error: err.message,
             })
         }
     }
@@ -28,9 +28,9 @@ class AppointmentController {
             })
         } catch(err) {
             console.error(`[AppointmentController] [getAppointment] err=${err}`)
-            res.send({
-                error: err.toString()
-            }) 
+            res.status(err.statusCode).json({
+                error: err.message,
+            })
         }
     }
 
@@ -44,8 +44,8 @@ class AppointmentController {
             })
         } catch (error) {
             console.error(`[AppointmentController] [updateAppointment] err=${error}`)
-            res.send({
-                error: error.toString()
+            res.status(err.statusCode).json({
+                error: err.message,
             })
         }
     }
@@ -55,13 +55,13 @@ class AppointmentController {
             const id = req.params.id
 
             await this.svc.deleteAppointmentsByID(id)
-            res.send({
+            res.status(202).json({
                 status: "success"
             })
         } catch (error) {
             console.error(`[AppointmentController] [deleteAppointment] err=${error}`)
-            res.send({
-                error: error.toString()
+            res.status(err.statusCode).json({
+                error: err.message,
             })
         }
     }
