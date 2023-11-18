@@ -65,6 +65,21 @@ class AppointmentController {
             })
         }
     }
+
+    uploadAppointmentEvidence = async (req, res, next) => {
+        try {
+            const { id } = req.params
+            const imageURL = await this.svc.uploadAppointmentEvidence(req, id)
+            res.status(200).json({
+                imageURL
+            })
+        } catch (error) {
+            console.error(`[AppointmentController] [uploadAppointment] err=${error}`)
+            res.status(err.statusCode).json({
+                error: err.message,
+            }) 
+        }
+    }
 }
 
 export default AppointmentController

@@ -1,5 +1,6 @@
 import appointmentSchema from '../utils/validator/appointment-validator.js'
 import BaseError from '../utils/error/error.js'
+import uploadImage from '../utils/gcs/uploadImage.js'
 // Separation of Concern
 
 class AppointmentService {
@@ -85,6 +86,21 @@ class AppointmentService {
             return this.repo.update(updatedID, updateAppointmentRequest)
         } catch (error) {
            throw new BaseError(500, error) 
+        }
+    }
+
+    uploadAppointmentEvidence = async (req, id) => {
+        try {
+            const data = await this.repo.getByID(id)
+            if (!data) throw new BaseError(500, "No Data Found") 
+ 
+            const imageURL = await uploadImage(req.file)
+
+            await this.repo.updateEvidence(id, imageURL)
+
+            return imageURL
+        } catch (error) {
+            throw new BaseError(500, error)
         }
     }
 } 

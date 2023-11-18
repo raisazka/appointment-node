@@ -2,15 +2,20 @@ import mongoose from "mongoose";
 
 const Appointment = new mongoose.Schema({
     doctorID: {
-        type: mongoose.Types.ObjectId
+        type: mongoose.Types.ObjectId,
+        required: true
     },
     userID: {
-        type: mongoose.Types.ObjectId
+        type: mongoose.Types.ObjectId,
+        required: true
     },
     appointmentTime: {
         type: Date
     }, 
     service: {
+        type: String
+    },
+    evidence: {
         type: String
     }
 })

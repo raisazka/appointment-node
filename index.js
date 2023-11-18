@@ -12,13 +12,24 @@ import AuthService from './service/auth.js'
 import AuthController from './controller/auth.js'
 import authRoutes from './routes/authRoutes.js'
 import errorHandlerMiddleware from './middleware/errorHandlerMiddleware.js'
+import multer from 'multer'
+import { resolve } from 'path'
 
 const app = express()
 // const router = express.Router()
 
+const multerMiddleware = multer({
+    storage: multer.memoryStorage(),
+    limits: {
+        // 2MB max size
+        fileSize: 2 * 1024 * 1024
+    }
+})
+
 // Middleware -> will explain di next session
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(multerMiddleware.single('file'))
 app.use(errorHandlerMiddleware)
 
 // Init to MongoDB

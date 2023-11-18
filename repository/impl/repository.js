@@ -38,6 +38,12 @@ class AppointmentRepository {
         })
     }
 
+    updateEvidence = (id, filename) => {
+        return AppointmentModel.updateOne({ _id:  new mongoose.Types.ObjectId(id) }, {
+            evidence: filename
+        })
+    }
+
     delete = (id) => {
         return AppointmentModel.deleteOne({
             _id: new mongoose.Types.ObjectId(id)

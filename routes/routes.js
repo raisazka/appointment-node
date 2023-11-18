@@ -5,4 +5,5 @@ export default (app, controller) => {
     app.post("/appointment/create", authMiddleware, controller.addAppointment)
     app.patch("/appointment/update/:id", authMiddleware, controller.updateAppointment)
     app.delete("/appointment/delete/:id", adminAuthMiddleware, controller.deleteAppointment)
+    app.put("/appointment/upload/:id", controller.uploadAppointmentEvidence)
 }
