@@ -1,5 +1,5 @@
 import app from './express/index.js'
 
-app.listen(8000, function () {
+app.listen(3000, function () {
     console.log("Server start on Port 3000");
 })
