@@ -1,2 +1,3 @@
 Features:
-- This is feature 2, with bugfix
+- This is feature 2, with bugfix. with love from indo
+- This is feature 4, hello aku harap ini bisa generate more money
