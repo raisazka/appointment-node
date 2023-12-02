@@ -1,3 +1,4 @@
 Features:
 - This is feature 2, with bugfix
 - This is feature 3, with love from indonesia
+- This is feature 4, hello aku harap ini bisa generate more money
