@@ -5,7 +5,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "start": "node ./index.js",
+    "build": "npm install"
   },
   "jest": {
     "testEnvironment": "node"
