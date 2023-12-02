@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 export default () => {
-   const connection = mongoose.connect("mongodb://127.0.0.1:27017/clinic_appointment", {
+   const connection = mongoose.connect("mongodb+srv://raisdb:spongbob@konexi-mongo.y9dffsr.mongodb.net/?retryWrites=true&w=majority", {
         connectTimeoutMS: 1000,
    })
 
